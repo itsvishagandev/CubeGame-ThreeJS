@@ -9,6 +9,8 @@ const sizes = {
   radio: window.innerWidth / window.innerHeight,
 };
 
+const texture = new THREE.TextureLoader().load("./assets/chees-bg.jpg");
+
 // Scene
 const scene = new THREE.Scene();
 
@@ -31,8 +33,12 @@ class box extends THREE.Mesh {
     zAccelarion = false,
   }) {
     super(
+
       new THREE.BoxGeometry(width, height, depth),
-      new THREE.MeshStandardMaterial({ color })
+      new THREE.MeshStandardMaterial({ 
+        color,
+        map: texture
+       })
     );
 
     this.width = width;
@@ -113,7 +119,7 @@ const ground = new box({
   width: 10,
   height: 0.5,
   depth: 40,
-  color: "#0000ff",
+  color: "#ffffff",
   position: {
     x: 0,
     y: -2,
@@ -224,7 +230,7 @@ function animate() {
   if (movement.right) cube.velocity.x = 0.1;
   else if (movement.left) cube.velocity.x = -0.1;
 
-  cube.update(ground);
+  cube.update(ground, animateId);
 
   // adding Enemies
   enemies.forEach((enemy) => {
